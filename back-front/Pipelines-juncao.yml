@@ -1,39 +1,45 @@
-jobs:
-  - job: Test
-    pool:
-      vmImage: 'Ubuntu latest'
-    variables:
-      NODE_VERSION: 10.15.3
-      SPRING_OUTPUT_ANSI_ENABLED: NEVER
-      SPRING_JPA_SHOW_SQL: false
-      JHI_DISABLE_WEBPACK_LOGS: true
+trigger:
+- none
 
-    steps:
-      #----------------------------------------------------------------------
-      # Install all tools and check configuration
-      #----------------------------------------------------------------------
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '10.15.3'
-        displayName: 'TOOLS: install Node.js'
-      - script: sudo npm install -g npm
-        displayName: 'TOOLS: update NPM'
-      #----------------------------------------------------------------------
-      # Tests
-      #----------------------------------------------------------------------
-      - script: npm install
-        displayName: 'INSTALL: launch npm install'
-      #----------------------------------------------------------------------
-      # Production build
-      #----------------------------------------------------------------------
-      - script: package -Pprod
-        displayName: 'BUILD: creating production build'
-      - task: CopyFiles@2
-        inputs:
-          SourceFolder: 'target'
-          Contents: '*.jar'
-          TargetFolder: '$(Build.ArtifactStagingDirectory)'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          artifactName: bugtracker
+pool:
+  vmImage: ubuntu-latest
+  variables:
+    NODE_VERSION: 10.15.3
+    SPRING_OUTPUT_ANSI_ENABLED: NEVER
+    SPRING_JPA_SHOW_SQL: false
+    JHI_DISABLE_WEBPACK_LOGS: true
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.x'
+  displayName: 'Install Node.js'
+  
+- script: |
+    npm install --legacy-peer-deps
+    npm install -g @angular/cli
+    npm install
+    ng build --prod
+  displayName: 'npm install and build'
+  workingDirectory: '$(Build.SourcesDirectory)'
+
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'target'
+    Contents: '*.jar'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: bugtracker
