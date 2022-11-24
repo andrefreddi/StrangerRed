@@ -1,7 +1,7 @@
 jobs:
   - job: Test
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: 'Ubuntu latest'
     variables:
       NODE_VERSION: 10.15.3
       SPRING_OUTPUT_ANSI_ENABLED: NEVER
