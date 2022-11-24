@@ -18,18 +18,14 @@ jobs:
         displayName: 'TOOLS: install Node.js'
       - script: sudo npm install -g npm
         displayName: 'TOOLS: update NPM'
-      - script: sudo chown -R vsts:docker /home/vsts/.npm/
-        displayName: 'change /home/vsts/.npm/ permission'
-      - script: sudo /etc/init.d/mysql stop
-        displayName: 'TOOLS: stop MySQL'
       #----------------------------------------------------------------------
       # Tests
       #----------------------------------------------------------------------
       - script: npm install
         displayName: 'INSTALL: launch npm install'
       - script: |
-          chmod +x mvnw
-          ./mvnw clean verify
+          chmod +x mvn
+          ./mvn clean verify
         displayName: 'TESTS: backend'
       - script: ./mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'
         displayName: 'TESTS: frontend'
