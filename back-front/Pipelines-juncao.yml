@@ -23,10 +23,6 @@ jobs:
       #----------------------------------------------------------------------
       - script: npm install
         displayName: 'INSTALL: launch npm install'
-      - script: |
-          chmod +x mvn
-          ./mvn clean verify
-        displayName: 'TESTS: frontend'
       - script: ./mvn verify -Pprod -DskipTests
         displayName: 'TESTS: packaging'
       #----------------------------------------------------------------------
