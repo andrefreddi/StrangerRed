@@ -23,12 +23,10 @@ jobs:
       #----------------------------------------------------------------------
       - script: npm install
         displayName: 'INSTALL: launch npm install'
-      - script: ./mvn verify -Pprod -DskipTests
-        displayName: 'TESTS: packaging'
       #----------------------------------------------------------------------
       # Production build
       #----------------------------------------------------------------------
-      - script: ./mvnw package -Pprod -DskipTests
+      - script: ./mvn package -Pprod -DskipTests
         displayName: 'BUILD: creating production build'
       - task: CopyFiles@2
         inputs:
