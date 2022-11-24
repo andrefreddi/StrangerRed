@@ -27,9 +27,9 @@ jobs:
           chmod +x mvn
           ./mvn clean verify
         displayName: 'TESTS: backend'
-      - script: ./mvnw com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'
+      - script: ./mvn com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'
         displayName: 'TESTS: frontend'
-      - script: ./mvnw verify -Pprod -DskipTests
+      - script: ./mvn verify -Pprod -DskipTests
         displayName: 'TESTS: packaging'
       #----------------------------------------------------------------------
       # Production build
