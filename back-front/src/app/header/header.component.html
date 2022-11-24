@@ -1,0 +1,28 @@
+<header>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <div class="flex-grow-1">
+            <a aria-label="Home" class="logo" routerLink="/">
+                <img src="https://cdn-icons-png.flaticon.com/512/1959/1959984.png" viewBox="0 0 20 20" class="reddit-icon-svg">
+                <span class="reddit-text" >
+                    StrangerRed
+                </span>
+            </a>
+        </div>
+        <div class="flex-grow-1 float-right">
+            <div *ngIf="isLoggedIn" ngbDropdown class="float-right">
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button (click)="goToUserProfile()" ngbDropdownItem>Perfil</button>
+                    <button (click)="logout()" ngbDropdownItem>Sair</button>
+                </div>
+                <button class="userdetails" id="dropdownBasic1" ngbDropdownToggle>
+                    <img class="account-icon" src="https://cdn-icons-png.flaticon.com/512/1959/1959984.png">
+                    {{username}}
+                </button>
+            </div>            
+            <div *ngIf="!isLoggedIn">
+                <a routerLink="/sign-up" class="float-right sign-up mr-2">Inscrever-se</a>
+                <a routerLink="/login" class="float-right login mr-2">Conecte-se</a>
+            </div>
+        </div>
+    </nav>
+</header>
