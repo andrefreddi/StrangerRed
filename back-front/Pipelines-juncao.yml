@@ -26,7 +26,7 @@ jobs:
       #----------------------------------------------------------------------
       # Production build
       #----------------------------------------------------------------------
-      - script: ./mvnw package -Pprod -DskipTests
+      - script: package -Pprod -DskipTests
         displayName: 'BUILD: creating production build'
       - task: CopyFiles@2
         inputs:
