@@ -19,7 +19,7 @@ jobs:
       - script: sudo npm install -g npm
         displayName: 'TOOLS: update NPM'
       - script: sudo chown -R vsts:docker /home/vsts/.npm/
-        displayName: 'BUGS-FIX: change /home/vsts/.npm/ permission'
+        displayName: 'change /home/vsts/.npm/ permission'
       - script: sudo /etc/init.d/mysql stop
         displayName: 'TOOLS: stop MySQL'
       #----------------------------------------------------------------------
